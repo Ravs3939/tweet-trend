@@ -22,10 +22,9 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv('valaxy-sonarqube-server') {
-                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=your_project_key -Dsonar.organization=your_sonarcloud_organization"
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=your_project_key -Dsonar.organization=twitterpro7"
                 }
             }
         }
     }
 }
-
