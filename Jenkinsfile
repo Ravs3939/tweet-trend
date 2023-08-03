@@ -19,14 +19,14 @@ pipeline {
         stage('SonarQube analysis') {
             environment {
                 scannerHome = tool 'valaxy-sonar-scanner'
-                SONAR_PROJECT_KEY = 'your_project_key_here'
+                SONAR_PROJECT_KEY = 'rvzpro7_twittertrend'
                 SONAR_ORGANIZATION = 'valaxy01'
                 SONAR_PROJECT_NAME = 'twittertrend'
             }
             steps{
                 script {
                     withSonarQubeEnv('valaxy-sonarqube-server') {
-                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.organization=${SONAR_ORGANIZATION} -Dsonar.projectName=${SONAR_PROJECT_NAME}"
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${rvzpro7_twittertrend} -Dsonar.organization=${valaxy01} -Dsonar.projectName=${twittertrend}"
                     }
                 }
             }
