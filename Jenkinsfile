@@ -23,10 +23,10 @@ pipeline {
                 SONAR_ORGANIZATION = 'valaxy01'
                 SONAR_PROJECT_NAME = 'twittertrend'
             }
-            steps{
+            steps {
                 script {
                     withSonarQubeEnv('valaxy-sonarqube-server') {
-                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${rvzpro7_twittertrend} -Dsonar.organization=${valaxy01} -Dsonar.projectName=${twittertrend}"
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.organization=${SONAR_ORGANIZATION} -Dsonar.projectName=${SONAR_PROJECT_NAME}"
                     }
                 }
             }
