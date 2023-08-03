@@ -19,10 +19,14 @@ pipeline {
         stage('SonarQube analysis') {
             environment {
                 scannerHome = tool 'valaxy-sonar-scanner'
+                SONAR_PROJECT_KEY = 'ttrend01' 
+                SONAR_ORGANIZATION = 'valaxy01r-key' 
             }
             steps {
-                withSonarQubeEnv('valaxy-sonarqube-server') {
-                    sh "${scannerHome}/bin/sonar-scanner"
+                script {
+                    withSonarQubeEnv('valaxy-sonarqube-server') {
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.organization=${SONAR_ORGANIZATION}"
+                    }
                 }
             }
         }
