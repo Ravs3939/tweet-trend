@@ -8,6 +8,7 @@ pipeline {
     environment {
         PATH = "/opt/apache-maven-3.9.3/bin:$PATH"
     }
+    
     stages {
         stage("build") {
             steps {
@@ -20,8 +21,8 @@ pipeline {
                 scannerHome = tool 'valaxy-sonar-scanner'
             }
             steps {
-                    withSonarQubeEnv('valaxy-sonarqube-server') {
-                        sh "${scannerHome}/bin/sonar-scanner"
+                withSonarQubeEnv('valaxy-sonarqube-server') {
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=your_project_key -Dsonar.organization=your_sonarcloud_organization"
                 }
             }
         }
