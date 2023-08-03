@@ -17,18 +17,23 @@ pipeline {
         }
         
         stage('SonarQube analysis') {
-            environment {
-                scannerHome = tool 'valaxy-sonar-scanner'
-                SONAR_PROJECT_KEY = 'rvzpro7_twittertrend'
-                SONAR_ORGANIZATION = 'valaxy01'
-                SONAR_PROJECT_NAME = 'twittertrend'
-            }
-            steps {
-                script {
-                    withSonarQubeEnv('valaxy-sonarqube-server') {
-                        sh "${scannerHome}/bin/sonar-scanner -X -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.organization=${SONAR_ORGANIZATION} -Dsonar.projectName=${SONAR_PROJECT_NAME}"
-                    }
-                }
+    environment {
+        scannerHome = tool 'valaxy-sonar-scanner'
+        SONAR_PROJECT_KEY = 'rvzpro7_twittertrend'
+        SONAR_ORGANIZATION = 'valaxy01'
+        SONAR_PROJECT_NAME = 'twittertrend'
+    }
+    steps {
+        script {
+            withSonarQubeEnv('valaxy-sonarqube-server') {
+                sh """
+                    ${scannerHome}/bin/sonar-scanner \
+                    -X \
+                    -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                    -Dsonar.organization=${SONAR_ORGANIZATION} \
+                    -Dsonar.projectName=${SONAR_PROJECT_NAME} \
+                    -Dsonar.java.binaries=target/classes
+                """
             }
         }
     }
