@@ -58,7 +58,7 @@ pipeline {
             steps {
                 script {
                     echo '<--------------- Jar Publish Started --------------->'
-                    def server = Artifactory.newServer url:registry+"/artifactory", credentialsId: "artfiact_cred"
+                    def server = Artifactory.newServer url:registry+"/artifactory", credentialsId: "artfiact-cred"
                     def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}"
                     def uploadSpec = """{
                           "files": [
@@ -93,7 +93,7 @@ pipeline {
             steps {
                 script {
                     echo '<--------------- Docker Publish Started --------------->'
-                    docker.withRegistry(registry, 'artfiact_cred') {
+                    docker.withRegistry(registry, 'artfiact-cred') {
                         app.push()
                     }
                     echo '<--------------- Docker Publish Ended --------------->'
