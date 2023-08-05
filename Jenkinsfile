@@ -82,8 +82,14 @@ pipeline {
             steps {
                 script {
                     echo '<--------------- Docker Build Started --------------->'
-                    app = docker.build("${imageName}:${version}")
-                    echo '<--------------- Docker Build Ended --------------->'
+                    try {
+                        app = docker.build("${imageName}:${version}")
+                    } catch (Exception e) {
+                        currentBuild.result = 'FAILURE'
+                        throw e
+                    } finally {
+                        echo '<--------------- Docker Build Ended --------------->'
+                    }
                 }
             }
         }
@@ -92,10 +98,16 @@ pipeline {
             steps {
                 script {
                     echo '<--------------- Docker Publish Started --------------->'
-                    docker.withRegistry("${registry}", 'artfiact-cred') {
-                        app.push()
+                    try {
+                        docker.withRegistry("${registry}", 'artfiact-cred') {
+                            app.push()
+                        }
+                    } catch (Exception e) {
+                        currentBuild.result = 'FAILURE'
+                        throw e
+                    } finally {
+                        echo '<--------------- Docker Publish Ended --------------->'
                     }
-                    echo '<--------------- Docker Publish Ended --------------->'
                 }
             }
         }
